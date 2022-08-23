@@ -178,11 +178,7 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
-<<<<<<< HEAD
     rubocop (1.35.1)
-=======
-    rubocop (1.35.0)
->>>>>>> requests-specs
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.2.1)
@@ -221,11 +217,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
-<<<<<<< HEAD
-  rspec-rails (>= 3.9.0)
-=======
   rspec-rails
->>>>>>> requests-specs
   rubocop (>= 1.0, < 2.0)
   simple_command
   tzinfo-data
