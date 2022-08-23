@@ -20,9 +20,9 @@ describe Reservation, type: :model do
       expect(subject).to_not be_valid
     end
 
-    # it 'Reservation total should be present' do
-    #   subject.total = nil
-    #   expect(subject).to_not be_valid
-    # end
+    it 'Reservation total should be present' do
+      subject.total = nil
+      expect(subject).to_not be_valid
+    end
   end
 end
