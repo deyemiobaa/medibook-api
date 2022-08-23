@@ -5,7 +5,7 @@ describe Reservation, type: :model do
     subject do
       @user1 = User.create!(username: 'user1', password_digest: '12345678', role: 'regular')
       @doctor = Doctor.create!(name: 'Doctor1', specialization: 'eye specialist', available_times: 'monday-friday',
-        hourly_rate: 250)
+                               hourly_rate: 250)
       Reservation.create!(date: DateTime.now, duration: 4, total: 100, user_id: @user1.id, doctor_id: @doctor.id)
     end
     before { subject.save }
