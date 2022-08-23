@@ -1,5 +1,5 @@
 class Doctor < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
 
   has_many :reservations
   has_many :user, through: :reservations

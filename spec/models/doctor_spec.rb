@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Doctor, type: :model do
+describe Doctor, type: :model do
   describe 'Doctor validation tests' do
     subject do
       @user1 = User.create!(username: 'user1', password_digest: '12345678', role: 'regular')
