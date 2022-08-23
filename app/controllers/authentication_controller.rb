@@ -6,7 +6,7 @@ class AuthenticationController < ApplicationController
 
     if command.success?
       user = User.find_by(username: params[:username])
-      render json: { auth_token: command.result, user_role: user.role }
+      render json: { auth_token: command.result, role: user.role, name: user.username }
     else
       render json: { error: command.errors }, status: :unauthorized
     end
