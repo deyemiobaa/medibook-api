@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :items
   resources :doctors
-  
   post 'authenticate', to: 'authentication#authenticate'
+  post 'signup', to: 'users#create'
 end
