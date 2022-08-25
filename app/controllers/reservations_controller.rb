@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
   def index
-    @reservations = Reservation.all
+    @reservations = Reservation.includes(:user).where(user_id: current_user.id)
     render json: @reservations
   end
 
@@ -9,12 +9,12 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    @reservations = Reservation.create(reservation_params)
+    @reservations = Reservation.new(reservation_params)
     @reservations.user = current_user
     if @reservations.save
-      redirect_to @reservations
+      render json: { message: 'reservation created', status: :created }
     else
-      render :new
+      render json: @reservations.errors, status: :unprocessable_entity
     end
   end
 
@@ -30,6 +30,6 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservations).permit(:date, :duration, :total)
+    params.permit(:date, :duration, :total, :doctor_id)
   end
 end
