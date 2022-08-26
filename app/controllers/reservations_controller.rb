@@ -1,6 +1,10 @@
 class ReservationsController < ApplicationController
   def index
-    @reservations = Reservation.includes(:user).where(user_id: current_user.id)
+    @reservations = Reservation.find_by_sql(
+      "SELECT reservations.id as id, doctors.name, reservations.total, reservations.duration, reservations.date
+      FROM reservations INNER JOIN doctors ON reservations.doctor_id = doctors.id
+      WHERE reservations.user_id = #{current_user.id}"
+    )
     render json: @reservations
   end
 
