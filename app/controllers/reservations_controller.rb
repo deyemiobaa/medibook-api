@@ -8,10 +8,6 @@ class ReservationsController < ApplicationController
     render json: @reservations
   end
 
-  def new
-    @reservations = Reservation.new
-  end
-
   def create
     @reservations = Reservation.new(reservation_params)
     @reservations.user = current_user
@@ -20,10 +16,6 @@ class ReservationsController < ApplicationController
     else
       render json: @reservations.errors, status: :unprocessable_entity
     end
-  end
-
-  def show
-    @reservations = Reservation.find(params[:id])
   end
 
   def destroy
