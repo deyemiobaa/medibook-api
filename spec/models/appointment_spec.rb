@@ -19,10 +19,5 @@ describe Appointment, type: :model do
       subject.duration = nil
       expect(subject).to_not be_valid
     end
-
-    it 'total should be present' do
-      subject.total = nil
-      expect(subject).to_not be_valid
-    end
   end
 end
