@@ -1,7 +1,7 @@
 class Doctor < ApplicationRecord
   belongs_to :user, optional: true
 
-  has_many :reservations
-  has_many :user, through: :reservations
+  has_many :appointments
+  has_many :user, through: :appointments
   validates :name, :specialization, :available_times, :hourly_rate, presence: true
 end
