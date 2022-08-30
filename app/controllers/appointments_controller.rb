@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   def index
-    @appointments = appointment.find_by_sql(
+    @appointments = Appointment.find_by_sql(
       "SELECT appointments.id as id, doctors.name, appointments.total, appointments.duration, appointments.date
       FROM appointments INNER JOIN doctors ON appointments.doctor_id = doctors.id
       WHERE appointments.user_id = #{current_user.id}"
@@ -19,7 +19,7 @@ class AppointmentsController < ApplicationController
   end
 
   def destroy
-    @appointment = appointment.find(params[:id])
+    @appointment = Appointment.find(params[:id])
     if @appointment.destroy
       render json: { message: 'appointment deleted', status: :ok }
     else
@@ -30,6 +30,6 @@ class AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.permit(:date, :duration, :doctor_id)
+    params.require(:appointment).permit(:date, :duration, :doctor_id)
   end
 end
