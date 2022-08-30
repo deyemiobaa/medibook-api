@@ -1,4 +1,4 @@
-class appointmentsController < ApplicationController
+class AppointmentsController < ApplicationController
   def index
     @appointments = appointment.find_by_sql(
       "SELECT appointments.id as id, doctors.name, appointments.total, appointments.duration, appointments.date
@@ -9,12 +9,12 @@ class appointmentsController < ApplicationController
   end
 
   def create
-    @appointments = appointment.new(appointment_params)
+    @appointments = Appointment.new(appointment_params)
     @appointments.user = current_user
     if @appointments.save
       render json: { message: 'appointment added', status: :created }
     else
-      render json: {message: 'appointment not created'}, status: :unprocessable_entity
+      render json: { message: 'appointment not created' }, status: :unprocessable_entity
     end
   end
 

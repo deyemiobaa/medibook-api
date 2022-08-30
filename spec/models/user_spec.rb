@@ -4,7 +4,6 @@ describe User, type: :model do
   describe 'User validation tests;' do
     subject do
       @user1 = User.create!(username: 'John', password: '123456', password_confirmation: '123456')
-
     end
     before { subject.save }
 

@@ -6,7 +6,7 @@ describe Doctor, type: :model do
       @user1 = User.create!(username: 'John', password: '123456', password_confirmation: '123456')
 
       Doctor.create!(name: 'Doctor1', specialization: 'eye specialist', available_times: 'monday-friday',
-                    hourly_rate: 250)
+                     hourly_rate: 250)
     end
     before { subject.save }
 
