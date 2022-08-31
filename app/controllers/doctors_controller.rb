@@ -23,7 +23,7 @@ class DoctorsController < ApplicationController
     if @doctor.destroy
       render json: { message: 'Doctor profile deleted', status: :ok }
     else
-      render json: { message: 'Doctor profile not found'}, status: :not_found
+      render json: { message: 'Doctor profile not found' }, status: :not_found
     end
   end
 
