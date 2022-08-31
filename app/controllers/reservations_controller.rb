@@ -12,20 +12,24 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.new(reservation_params)
     @reservations.user = current_user
     if @reservations.save
-      render json: { message: 'reservation created', status: :created }
+      render json: { message: 'Reservation added', status: :created }
     else
-      render json: @reservations.errors, status: :unprocessable_entity
+      render json: {message: 'Reservation not created'}, status: :unprocessable_entity
     end
   end
 
   def destroy
     @reservation = Reservation.find(params[:id])
-    @reservation.destroy
+    if @reservation.destroy
+      render json: { message: 'reservation deleted', status: :ok }
+    else
+      render json: { message: 'reservation not found', status: :not_found }
+    end
   end
 
   private
 
   def reservation_params
-    params.permit(:date, :duration, :total, :doctor_id)
+    params.permit(:date, :duration, :doctor_id)
   end
 end
