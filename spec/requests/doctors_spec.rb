@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Doctors', type: :request do
-  let!(:doctors) {FactoryBot.create_list(:doctor, 3)}
+  let!(:doctors) { FactoryBot.create_list(:doctor, 3) }
   before do
     @current_user = FactoryBot.create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@current_user)
@@ -17,17 +17,19 @@ RSpec.describe 'Doctors', type: :request do
 
   describe 'DELETE /doctors/:id' do
     it 'deletes a doctor' do
-      expect {
+      expect do
         delete doctor_path(doctors.first)
-      }.to change(Doctor, :count).by(-1)
+      end.to change(Doctor, :count).by(-1)
     end
   end
 
   describe 'POST /doctors' do
     it 'creates a doctor' do
-      expect {
-        post doctors_path, params: { doctor: { name: 'Doctor', specialization: 'Specialization', picture: 'mydemopic.png', available_times: 'Weekdays 10am to 5pm', hourly_rate: '10' } }
-      }.to change(Doctor, :count).by(1)
+      expect do
+        post doctors_path,
+             params: { doctor: { name: 'Doctor', specialization: 'Specialization', picture: 'mydemopic.png',
+                                 available_times: 'Weekdays 10am to 5pm', hourly_rate: '10' } }
+      end.to change(Doctor, :count).by(1)
     end
   end
 end

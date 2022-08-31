@@ -12,7 +12,7 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.new(doctor_params)
 
     if @doctor.save
-      render json: {message: 'Doctor profile added successfully'}, status: :created
+      render json: { message: 'Doctor profile added successfully' }, status: :created
     else
       render json: @doctor.errors, status: :unprocessable_entity
     end

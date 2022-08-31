@@ -18,18 +18,18 @@ RSpec.describe 'Appointments', type: :request do
 
   describe 'POST /appointments' do
     it 'creates a appointment' do
-      expect {
+      expect do
         post appointments_path, params: { appointment: { date: '2020-01-01', duration: '1', doctor_id: @doctor.id } }
-      }.to change(Appointment, :count).by(1)
+      end.to change(Appointment, :count).by(1)
     end
   end
 
   describe 'DELETE /appointments/:id' do
     it 'deletes a appointment' do
       @appointment = FactoryBot.create(:appointment, doctor: @doctor, user: @current_user)
-      expect {
+      expect do
         delete appointment_path(@appointment)
-      }.to change(Appointment, :count).by(-1)
+      end.to change(Appointment, :count).by(-1)
     end
   end
 end
