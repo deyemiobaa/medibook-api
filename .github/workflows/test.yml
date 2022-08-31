@@ -17,10 +17,11 @@ jobs:
       postgres:
         image: postgres:11-alpine
         env:
-          POSTGRES_DB: medibook_spec
+          POSTGRES_DB: api
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: deyemiobaa
         options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
@@ -40,7 +41,7 @@ jobs:
       - name: Set up database schema
         run: bin/rails db:setup
         env:
-          DATABASE_URL: "postgres://rails:postgres@localhost:5432/medibook_spec"
+          DATABASE_URL: "postgres://rails:deyemiobaa@localhost:5432/api"
       # Add or replace test runners here
-      - name: Run tests
-        run: bundle exec rake
+      - name: RSpec Tests
+        run: bundle exec rspec spec/
