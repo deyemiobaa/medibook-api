@@ -17,9 +17,9 @@ jobs:
       postgres:
         image: postgres:11-alpine
         env:
-          POSTGRES_DB: api
+          POSTGRES_DB: medibook_spec
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: deyemiobaa
+          POSTGRES_PASSWORD: postgres
         options: >-
           --mount type=tmpfs,destination=/var/lib/postgresql/data
           --health-cmd pg_isready
@@ -38,10 +38,21 @@ jobs:
           ruby-version: 2.7.0
           bundler-cache: true
       # Add or replace database setup steps here
+      - name: Install dependent libraries
+        run: sudo apt-get install libpq-dev
+
       - name: Set up database schema
-        run: bin/rails db:setup
+        run: |
+            cp config/database.yml.github-actions config/database.yml
+            bundle exec rails db:setup
         env:
-          DATABASE_URL: "postgres://rails:deyemiobaa@localhost:5432/api"
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
       # Add or replace test runners here
-      - name: RSpec Tests
-        run: bundle exec rspec spec/
+      - name: Run RSpec
+        run: COVERAGE=true bundle exec rspec  --require rails_helper
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
