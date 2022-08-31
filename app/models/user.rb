@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  has_many :reservations
-  has_many :doctors, through: :reservations
+  has_many :appointments
+  has_many :doctors, through: :appointments
   has_secure_password
+  validates :username, :password, :password_confirmation, presence: true
 end
