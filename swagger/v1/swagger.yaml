@@ -1,0 +1,172 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/appointments":
+    post:
+      summary: Creates a appointment
+      tags:
+      - Appointments
+      parameters: []
+      responses:
+        '201':
+          description: appointment created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appointment:
+                  doctor_id:
+                    type: number
+                  date:
+                    type: string
+                  duration:
+                    type: number
+              required:
+              - doctor_id
+              - date
+              - duration
+    get:
+      summary: Retrieves all appointments
+      tags:
+      - Appointments
+      responses:
+        '200':
+          description: appointments retrieved []
+  "/appointments/{id}":
+    delete:
+      summary: Deletes a appointment
+      tags:
+      - Appointments
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: appointment deleted
+        '404':
+          description: appointment not found
+  "/doctors":
+    post:
+      summary: Creates a doctor
+      tags:
+      - Doctors
+      parameters: []
+      responses:
+        '201':
+          description: doctor created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctor:
+                  name:
+                    type: string
+                  specialization:
+                    type: string
+                  picture:
+                    type: string
+                  available_times:
+                    type: string
+                  hourly_rate:
+                    type: number
+              required:
+              - name
+              - specialization
+              - picture
+              - available_times
+              - hourly_rate
+    get:
+      summary: Retrieves all doctors
+      tags:
+      - Doctors
+      responses:
+        '200':
+          description: doctors retrieved []
+  "/doctors/{id}":
+    delete:
+      summary: Deletes a doctor
+      tags:
+      - Doctors
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: doctor deleted
+        '404':
+          description: doctor not found
+  "/signup":
+    post:
+      summary: Creates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  username:
+                    type: string
+                  password:
+                    type: string
+                  password_confirmation:
+                    type: string
+              required:
+              - username
+              - password
+              - password_confirmation
+  "/authenticate":
+    post:
+      summary: Logs in a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: '{token: "", role: "" username: ""}'
+        '422':
+          description: Unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  username:
+                    type: string
+                  password:
+                    type: string
+              required:
+              - username
+              - password
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
