@@ -13,3 +13,4 @@
 
 @doctor2 = Doctor.create!(name: 'Dr. Isaac Collins', specialization: 'Therapy', available_times: 'Monday - Friday', hourly_rate: 150, picture: ('https://res.cloudinary.com/deyemiobaa/image/upload/v1661970752/medi-book/isaac-w-collins-1_kwuihq.jpg'))
 
+@admin = User.create!(username: 'admin', password: 'password', password_confirmation: 'password', role: 'admin')
