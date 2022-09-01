@@ -1,10 +1,6 @@
 class AppointmentsController < ApplicationController
   def index
-    @appointments = Appointment.find_by_sql(
-      "SELECT appointments.id as id, doctors.name, appointments.total, appointments.duration, appointments.date
-      FROM appointments INNER JOIN doctors ON appointments.doctor_id = doctors.id
-      WHERE appointments.user_id = #{current_user.id}"
-    )
+    @appointments = Appointment.joins(:doctor).where(user_id: current_user.id).pluck('appointments.id, doctors.name, appointments.total, appointments.duration, appointments.date')
     render json: @appointments
   end
 
