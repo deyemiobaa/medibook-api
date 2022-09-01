@@ -1,6 +1,8 @@
 class AppointmentsController < ApplicationController
   def index
-    @appointments = Appointment.joins(:doctor).where(user_id: current_user.id).pluck('appointments.id, doctors.name, appointments.total, appointments.duration, appointments.date')
+    @appointments = Appointment.joins(:doctor).where(user_id: current_user.id).pluck(
+      'appointments.id, doctors.name, appointments.total, appointments.duration, appointments.date'
+    )
     render json: @appointments
   end
 
