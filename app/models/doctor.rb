@@ -1,5 +1,5 @@
 class Doctor < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :user, required: false
 
   has_many :appointments
   has_many :user, through: :appointments
