@@ -2,68 +2,36 @@
 # medibook-api
 Backend API for the Medi-Book health appointment platform
 
-This app uses a Rails back-end as an API to send doctor details and appointment data to the frontend of a booking application.
+This app uses a Rails back-end as an API to send doctor details and appointment data to the frontend for scheduling appointments
 
-Enjoy your API!
-
-## Link to demo
-
-[demo link]()
-
-## medibook API Entity Relationship Diagram (ERD)
-
-<img src="assets/erd.png" />
-
+## Table of Contents
+* [Getting started](#getting-started)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Testing](#testing)
+* [Authors](#authors)
 
 ## Link to Kanban
 - [Kanban Board Link](https://github.com/orgs/medi-book/projects/1)
- 
-## Group Members
-Our group consists of 5 members and we are:
-@Sodiq - Team Member
-@Fantomas - Team Member
-@Ifza - Team Member
-@Oybek - Team Member
-@Kantush - Team Member
+
 
 ## Link to REACT FRONTEND
 
-[REACT FRONTEND](https://github.com/medi-book/medibook-api)
+[REACT FRONTEND](https://github.com/medi-book/medibook-ui)
 
 ## Built With
 
 - Ruby
 - Ruby on Rails
-- React
-- Redux
-- Linters
 - PostgreSQL
 - Heroku
 - Rspec
 - Rswag
 
-## Milestones
-
-[Project Requirements](https://github.com/microverseinc/curriculum-final-capstone/blob/main/projects/business_requirements.md) - distributed into milestones below:
-
-
-## API Endpoints
-
-[Live server: Rswag api documentations](https://)
-
 
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
-
-## Pre-requisites
-
-Make sure you have Ruby and Rails installed on your computer. If not, you can follow this [tutorial](https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project) to install them.
-
-If you don't have PostgreSQL installed, you can follow this [tutorial](https://www.postgresql.org/download/) to install it.
-
-## Usage
-
 In your terminal, navigate to your current directory and run this code
 
 `git clone https://github.com/medi-book/medibook-api`
@@ -72,44 +40,165 @@ Then run:
 
 `cd medibook-api`
 
-Open the project in your favorite code editor. `code .` for VS Code.
+Open in your preferred text editor. Run `code .` to open VScode.
 
-- Use the command `bundle install` or just simply `bundle` to install all project dependencies.
+## Setup
+
+This guide assumes you have already installed the necessary dependencies to use a postgreSQL database and Ruby on Rails.
+
+- Add all ruby gems to your Gemfile (`bundle install`)
+- Create a .env file in the root of your project and add the following lines: `PASSWORD_DB = your_password`
 - Run `rails db:create db:migrate db:seed` to create the database and run migrations.
-- You might need to supply a username and password for your PostgreSQL database if you run into an error with the previous step.
-- Simply navigate to `config/database.yml` and add your username and password to the `username` and `password` fields.
-
-Start terminal
-
-`rails s`
-
-- Then click on `http://127.0.0.1:3000`
-
-Enjoy your fantastic Doctoral bookings as your app opens in the web browser!
-
-## Run Linters:
-
-### To run rubocop we use:
-
-`rubocop`
-
-### To autocorrect offenses with rubocop we use:
-
-`rubocop -A`
-
-## Testing
-### Run Test for models
-
-`rspec spec`
 
 ## Usage
 
-- Login into Medibook App with your username
-- Click on the list of Doctors to see their specific detailed information
-- From Navigation or from details page click 'Reserve' to book an appointment
-- Click from Navigation panel, 'My Reservation' to view a list of your appointment details
+- Run `rails s` to start the server.
+- To create a new user, send a POST request to `http://localhost:3000/signup` with the following body:
 
-Enjoy saving time on long appointment calls by using our top ranking appointment booking App!
+```json
+{
+  "user": {
+    "username": "John Doe",
+    "password": "password",
+    "password_confirmation": "password"
+  }
+}
+```
+- To create an admin user use the rails console and run:
+
+```ruby
+User.create(username: "admin", password: "password", password_confirmation: "password", role: "admin")
+```
+
+- To login, send a POST request to `http://localhost:3000/authenticate` with the following body:
+```json
+{
+  "user": {
+    "username": "John Doe",
+    "password": "password"
+  }
+}
+```
+Response: The token would be used in the Authorization header for all subsequent requests.
+
+```json
+{
+  "username": "John Doe",
+  "token" : "token",
+  "role": "regular"
+}
+```
+- To create a new appointment, send a POST request to `http://localhost:3000/appointments` with the following body:
+```json
+{
+  "appointment": {
+    "doctor_id": 1,
+    "date": "2023-01-01 00:00:00",
+    "duration": 5,
+  }
+}
+```
+headers: 
+```json
+{
+  "Authorization": "token"
+}
+```
+Response:
+```json
+{
+  "message": "appointment added", 
+  "status": "created",
+}
+```
+
+- To get all appointments, send a GET request to `http://localhost:3000/appointments` with the following headers:
+```json
+{
+  "Authorization": "token"
+}
+```
+Response:
+```json
+{
+  [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "total": "000",
+      "duration": 5,
+      "date": "2023-01-01 00:00:00",
+    },
+    {
+      "id": 2,
+      "name": "John Doe",
+      "total": "000",
+      "duration": 5,
+      "date": "2023-01-01 00:00:00",
+    }
+  ]
+}
+```
+
+- To cancel an appointment, send a DELETE request to `http://localhost:3000/appointments/1` with the following headers:
+```json
+{
+  "Authorization": "token"
+}
+```
+Response:
+```json
+{
+  "message": "appointment deleted",
+  "status": "ok"
+}
+```
+
+- To get all doctors, send a GET request to `http://localhost:3000/doctors` with the following headers:
+```json
+{
+  "Authorization": "token"
+}
+```
+Response:
+```json
+{
+  [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "specialization": "specialty",
+      "hourly_rate": "$$",
+      "picture": "image.png",
+      "created_at": "created_at",
+      "updated_at": "updated_at"
+    },
+    {
+      "id": 2,
+      "name": "John Doe",
+      "specialization": "specialty",
+      "hourly_rate": "$$",
+      "picture": "image.png",
+      "created_at": "created_at",
+      "updated_at": "updated_at"
+    }
+  ]
+}
+```
+## Testing
+### Run Test for models and api requests:
+
+Run migrations for test database: `rails db:migrate RAILS_ENV=test`
+
+`rspec spec/models`
+`rspec spec/requests`
+
+
+### Link to documentation
+
+[docs link](https://api-medibook-app.herokuapp.com/api-docs)
+
+## Authors
 
 👤 **Sodiq Aderibigbe**
 
@@ -123,7 +212,7 @@ Enjoy saving time on long appointment calls by using our top ranking appointment
 - Twitter: [@FantomasAnicet](https://twitter.com/FantomasAnicet)
 - LinkedIn: [Anicet Murhula](https://www.linkedin.com/in/anicet-murhula/)
 
-👤 **IFZA Rasool**
+👤 **Ifza Rasool**
 - GitHub: [@ifzarasool](https://github.com/IfzaRasool
 - Twitter: [@ifzaarain](https://twitter.com/ifzaarain)
 - LinkedIn: [@ifza-arain]https://www.linkedin.com/in/ifza-arain/
@@ -151,11 +240,6 @@ Feel free to check the [issues page](https://github.com/medi-book/medibook-api/i
 
 Give a ⭐️ if you like this project!
 
-## Acknowledgments
-
-- Hat tip to anyone whose code was used
-- Original design idea by [Murat Korkmaz on Behance.]('https://www.behance.net/muratk')
-
 ## 📝 License
 
-This project is [MIT](./MIT.md) licensed.
+This project is [MIT](LICENSE) licensed.
