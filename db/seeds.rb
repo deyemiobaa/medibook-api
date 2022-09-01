@@ -7,10 +7,10 @@
 #   Character.create(name: "Luke", movie: movies.first)
 # User.create!(username:  "Example User", password: "password", password_confirmation: "password")
 
-@doctor1 = Doctor.create!(name: 'Nandita Sarchand', specialization: 'eye specialist', available_times: 'monday-friday', hourly_rate: 250, picture: ('https://asset.cloudinary.com/dcphbr3ka/607f68c350ebf6725e2804f73eba01bf'))
+@doctor1 = Doctor.create!(name: 'Dr. Khadijah Zaima', specialization: 'Heart Surgeon', available_times: 'Monday - Friday', hourly_rate: 250, picture: ('https://res.cloudinary.com/deyemiobaa/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max/v1662020335/medi-book/khadija-zaima.jpg'))
 
+@doctor3 = Doctor.create!(name: 'Dr. Katherine Powells', specialization: 'Opthalmology', available_times: 'Monday, Friday, and Saturday', hourly_rate: 250, picture: ('https://res.cloudinary.com/deyemiobaa/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max/v1661971056/medi-book/katherine-powells-1n.jpg'))
 
-@doctor2 = Doctor.create!(name: 'Ellen Abel', specialization: 'eye specialist', available_times: 'monday-friday', hourly_rate: 250, picture: ('https://asset.cloudinary.com/dcphbr3ka/87e6862dcd2ddc1f58c293f7c999c534'))
+@doctor2 = Doctor.create!(name: 'Dr. Isaac Collins', specialization: 'Therapy', available_times: 'Monday - Friday', hourly_rate: 150, picture: ('https://res.cloudinary.com/deyemiobaa/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max/v1661970752/medi-book/isaac-w-collins-1_kwuihq.jpg'))
 
-@doctor3 = Doctor.create!(name: 'Girard Geoni', specialization: 'eye specialist', available_times: 'monday-friday', hourly_rate: 250, picture: ('https://asset.cloudinary.com/dcphbr3ka/6ca49db87b0e6d8ed3ba05f84cf43472'))
-
+@admin = User.create!(username: 'admin', password: 'password', password_confirmation: 'password', role: 'admin')
